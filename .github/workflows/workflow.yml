@@ -1,0 +1,17 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  # test:
+  #   ...
+  deploy:
+    name: "Deploy to staging"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    # needs: test
+    env:
+      SSH_USER: ${{ secrets.STAGING_SSH_USER }}
+      SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
+    steps:
+      - name: ssh key name
+        run: |
+          echo "$SSH_USER" 
