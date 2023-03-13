@@ -9,8 +9,8 @@ jobs:
     if: github.event_name == 'push'
     # needs: test
     env:
-      SSH_USER: ${{ secrets.STAGING_SSH_USER }}
-      SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
     steps:
       - name: ssh key name
         run: |
