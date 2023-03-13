@@ -9,10 +9,11 @@ jobs:
     if: github.event_name == 'push'
     # needs: test
     env:
-      SSH_USER: ${{ secrets.SSH_USER }}
-      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USER: ${{ env.SSH_USER }}
+      SSH_HOST: ${{ env.SSH_HOST }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     steps:
       - name: ssh key name
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/staging.key
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/staging.key
