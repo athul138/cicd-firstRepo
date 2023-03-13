@@ -15,7 +15,5 @@ jobs:
     steps:
       - name: ssh key name
         run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
-          cat >>~/.ssh/config <<END
+          mkdir -p ~/ athul
+
