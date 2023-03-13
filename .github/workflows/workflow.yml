@@ -14,4 +14,4 @@ jobs:
     steps:
       - name: ssh key name
         run: |
-          echo "$SSH_USER" 
+          mkdir -p ~/.ssh/
