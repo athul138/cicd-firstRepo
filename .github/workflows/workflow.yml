@@ -6,12 +6,16 @@ jobs:
   deploy:
     name: "Deploy to staging"
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push'
     # needs: test
     env:
-      SSH_USER: ${{ secrets.STAGING_SSH_USER }}
-      SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
+      SSH_USER: $SSH_USER
+      SSH_HOST: $SSH_HOST
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     steps:
       - name: ssh key name
         run: |
-          echo "$SSH_USER" 
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
