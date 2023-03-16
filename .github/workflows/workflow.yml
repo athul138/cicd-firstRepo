@@ -1,19 +1,29 @@
 name: CI
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  # test:
-  #   ...
   deploy:
-    name: "Deploy to staging"
+    name: "Deploy to server"
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     # needs: test
-    env:
-      SSH_USER: $SSH_USER
-      SSH_HOST: $SSH_HOST
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     steps:
-      - name: ssh key name
+      - uses: actions/checkout@v2
+      - name: Check if PM2 is installed
         run: |
-          mkdir -p ~/ athul
-
+          if which pm2 >/dev/null; then
+            echo "PM2 is already installed"
+          else
+            npm install -g pm2
+          fi
+      - name: npm install for project
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Start Application with PM2
+        run: |
+          pm2 delete all
+          pm2 start npm --name "app" -- start
