@@ -20,7 +20,7 @@ jobs:
             npm install -g pm2
           fi
       - name: Check if dependencies are installed
-        working-directory: ./cicd-firstRepo
+        # working-directory: ./cicd-firstRepo
         run: |
           if [ -d "node_modules" ]; then
             echo "Node modules already installed"
