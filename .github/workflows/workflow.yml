@@ -22,7 +22,7 @@ jobs:
       - name: Check if dependencies are installed
         working-directory: ./cicd-firstRepo
         run: |
-          if [ -d "$PWD/node_modules" ]; then
+          if [ -d "node_modules" ]; then
             echo "Node modules already installed"
           else
             npm install
