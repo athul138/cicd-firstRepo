@@ -9,7 +9,6 @@ jobs:
     name: "Deploy to server"
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
-    working-directory: ./cicd-firstRepo
     # needs: test
     steps:
       - uses: actions/checkout@v2
@@ -30,6 +29,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Start Application with PM2
+        working-directory: ./cicd-firstRepo
         run: |
           pm2 delete all
           pm2 start npm --name "app" -- start
