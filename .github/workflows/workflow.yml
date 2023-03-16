@@ -4,15 +4,11 @@ branches:
       - develop
 jobs:
   deploy:
-    - name: "Deploy to server"
+    name: "Deploy to server"
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     # needs: test
-    env:
-      SSH_USER: $SSH_USER
-      SSH_HOST: $SSH_HOST
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-     steps:
+      steps:
       - uses: actions/checkout@v2
       - name: Check if PM2 is installed
         run: |
