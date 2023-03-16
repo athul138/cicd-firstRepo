@@ -1,13 +1,13 @@
 var http=require('http');
 
 var server=http.createServer(function(req,res){
-    res.end('test');
+    res.end('server instance created');
 });
-
+var port = 3000
 server.on('listening',function(){
-    console.log('ok, server is running');
+    console.log('ok, server is running on port '+port);
 });
 
-server.listen(80);
+server.listen(port);
 
 
