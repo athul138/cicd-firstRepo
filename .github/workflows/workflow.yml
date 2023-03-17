@@ -21,8 +21,6 @@ jobs:
           fi
       - name: npm install for project
         run: npm install
-      - name: Build
-        run: npm run build
       - name: Start Application with PM2
         run: |
           pm2 delete all
