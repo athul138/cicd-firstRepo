@@ -43,11 +43,11 @@ jobs:
       #   run: |
       #     pm2 start server.js
       - name: Stop the server
-        run: ssh staging 'sudo systemctl stop app'
+        run: ssh staging 'sudo systemctl stop server.js'
 
-      - name: Check out the source
-        run: ssh staging 'cd app && git fetch && git reset --hard origin/master'
+      # - name: Check out the source
+      #   run: ssh staging 'cd app && git fetch'
 
       - name: Start the server
         if: ${{ always() }}
-        run: ssh staging 'sudo systemctl start app'
+        run: ssh staging 'sudo systemctl start server.js'
