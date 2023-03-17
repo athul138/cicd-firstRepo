@@ -26,31 +26,7 @@ jobs:
         env:
           # SSH_USER: '${{ secrets.STAGING_SSH_USER }}'
           SSH_USER: 'ubuntu'
-          SSH_KEY: 'MIIEowIBAAKCAQEA3jC3qzo+4AbgwkthCyL8JhEkdFuVXPH/9NyXoobtoWogt4cE
-NM1WGLZPlNiO+7lWJB7IpiUW+Nt2J5LS+dhKZv9NafM29nAizM+CreT4pc82KMR4
-a+ZfhQNe9gX5TqS4gWPrVIAe4mABdrXXy3MRC28unYTI1aEtffk9peR1pnBD+KNw
-uuh8eaUBI1+14Al5gM8l+bb++/Tj5XwiPpsnMqsVsMR+2tfFTyFlkJgYa10vKiEX
-fQeNdy5KSXUx9DAtedUB+MSsAcoLUguUg8H0I3iWRu/J9RgcE6JqcmeTISYuLb/k
-+TK5KSrGaXMDTuKV0xcL85SgoseKXLP8BmNZgQIDAQABAoIBAHNTFgHp2XiuGTq/
-pT8CiZ24iBNc9cmoUhHl7U6Oegit7Q1VJvnBGk75UZUQUiaVrABTehHCbon8Xvdr
-XdYQTY3oNWYotv5ydZ2Yl1tq3SQyyQmf8GEQ0cNYXJGVyDDpjlqaYisZ1O3qptfW
-yoruzooAy1E2+obngZVBKJ5SVj5sTvJADk6sQvbP9fx6DGWZQ3bi5UnTen3f8ujD
-jTtq5T1yxFqooT9lEjGR5vBE5kSVaSIuy40hBy9s7Q0MSZBU2juHSXtyk9qu5rY/
-6+Eq8W9TIsv289ZHMNA1cPnnw1AdwBYC2BzxeTJ9RtLu2daEOCqaK5Mk6CM42T+4
-jYffigECgYEA+yRQqNTEhM/hKWgngK1uT2pbecDkZVaeIM3pLQwe5zRZfjbt4wAw
-uEml2n2DL4kPB17HjCrGVZhIDjbAAceHg903jzoYTXFvjDynyzwULLuq1ym0+m7T
-haNwQhygvweryUDleppMYilceXR2carXmMLnTZFdtxwB9usbv0FmgEUCgYEA4n0H
-4RM3V31PbTEawpD30J54wkhKQlXoViwdv/tlICQwWAmDy3pGGw9TYaLETbgxZMl7
-4RYxpwJj+SsU3hPdkK7oETBfq8US9cXd3rSaIcJSEML3YV3YpLY60YWD5jkEv5GO
-sHQFPXERD2yD0Wt2hy/WeHGA4cI/s8VEz6vX3g0CgYEA2TdzvFMrFmRmr1WytQ1M
-V8v6CrjX0v60DlOK1rehEwCoVw5Tev9zJDIvDWd5y+eT5CAKICXvHaF00TZxpBhc
-EaWIpIzu8Cyo+naL+rCgEoDPJwKf0euBcBkIw2XXcuLDpnJHCV/jqRN1NGeS+oV1
-rF8HiIOutu22lUaM3UNH0LECgYBvC2ZFkCpeFu5OVvkL1A/slQYYG2FtTLlxJogf
-jJ50N8oMH/4iUXz133m+MROWF20AQVkfbsZBYAasL9c3Wv4S5e6aHuGJUkKNhcnW
-Wy4Gx0N9PFoVvvFtMHt+JrwYsHQHiNIw6XF4Qmte6JFoqAuhFG9O9jd+eMLK3Tlz
-qIlaMQKBgHZj+V+0HBXKgj2qnGV38HUxVDkgYfMvfpT3ReARJtJZwBqd/oqs+5Gb
-zfcx6VLOpKBfvTyqW7OcU2ZHUzSMLN3i7UAC0kJyeBzGf6h54UxcUlykc8lzLfqj
-yyDNz4iihKCE7mZwv+28HA+iUwSQv9Yn+0twgj3BNUVC67mWgQxc'
+          SSH_KEY: '${{ secrets.STAGING_SSH_KEY }}'
           SSH_HOST: 'ec2-3-110-28-98.ap-south-1.compute.amazonaws.com'
           # SSH_HOST: '172-31-9-166'
       - uses: actions/checkout@v2
@@ -67,7 +43,7 @@ yyDNz4iihKCE7mZwv+28HA+iUwSQv9Yn+0twgj3BNUVC67mWgQxc'
       #   run: |
       #     pm2 start server.js
       - name: Stop the server
-        run: ssh staging 'sudo systemctl stop server.js'
+        run: ssh staging 'pm2 restart server.js'
 
       # - name: Check out the source
       #   run: ssh staging 'cd app && git fetch'
