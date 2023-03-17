@@ -42,12 +42,10 @@ jobs:
       # - name: Start Application with PM2
       #   run: |
       #     pm2 start server.js
-      - name: Stop the server
-        run: pm2 stop server.js
 
       # - name: Check out the source
       #   run: ssh staging 'cd app && git fetch'
 
       - name: Start the server
         if: ${{ always() }}
-        run: pm2 start server.js
+        run: pm2 restart server.js
