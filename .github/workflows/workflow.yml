@@ -24,8 +24,8 @@ jobs:
             StrictHostKeyChecking no
           END
         env:
-          # SSH_USER: ${{ secrets.STAGING_SSH_USER }}
-          # SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
+          SSH_USER: ${{ secrets.STAGING_SSH_USER }}
+          SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
           SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
       - uses: actions/checkout@v2
       - name: Check if PM2 is installed
@@ -37,6 +37,15 @@ jobs:
           fi
       - name: npm install for project
         run: npm install
-      - name: Start Application with PM2
-        run: |
-          pm2 start server.js
+      # - name: Start Application with PM2
+      #   run: |
+      #     pm2 start server.js
+      - name: Stop the server
+        run: ssh staging 'sudo systemctl stop app'
+
+      - name: Check out the source
+        run: ssh staging 'cd app && git fetch && git reset --hard origin/master'
+
+      - name: Start the server
+        if: ${{ always() }}
+        run: ssh staging 'sudo systemctl start app'
