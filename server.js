@@ -7,8 +7,6 @@ var port = 3000
 server.on('listening',function(){
     console.log('ok, server is running on port '+port);
 });
-
-
 server.listen(port);         
 
 
