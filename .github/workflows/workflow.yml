@@ -24,4 +24,4 @@ jobs:
       - name: Start Application with PM2
         run: |
           pm2 delete all
-          pm2 start npm --name "app" -- start
+          pm2 start npm --name "server.js" -- start
