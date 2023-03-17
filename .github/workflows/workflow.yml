@@ -28,7 +28,7 @@ jobs:
           SSH_USER: 'ubuntu'
           SSH_KEY: '${{ secrets.STAGING_SSH_KEY }}'
           # SSH_HOST: '${{ secrets.STAGING_SSH_HOST }}'
-          SSH_HOST: 'ec2-3-110-28-98'
+          SSH_HOST: '172-31-9-166'
       - uses: actions/checkout@v2
       - name: Check if PM2 is installed
         run: |
