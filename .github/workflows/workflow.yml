@@ -24,9 +24,9 @@ jobs:
             StrictHostKeyChecking no
           END
         env:
-          SSH_USER: ${{ secrets.STAGING_SSH_USER }}
-          SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
-          SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
+          SSH_USER: '${{ secrets.STAGING_SSH_USER }}'
+          SSH_KEY: '${{ secrets.STAGING_SSH_KEY }}'
+          SSH_HOST: '${{ secrets.STAGING_SSH_HOST }}'
       - uses: actions/checkout@v2
       - name: Check if PM2 is installed
         run: |
