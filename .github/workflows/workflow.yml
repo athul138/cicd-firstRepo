@@ -31,14 +31,14 @@ jobs:
           SSH_KEY: '${{ secrets.STAGING_SSH_KEY }}'
           SSH_HOST: 'ec2-3-110-28-98.ap-south-1.compute.amazonaws.com'
       - uses: actions/checkout@v2
-      - name: Check permission of ssh
-        run: ls -l /home/runner/.ssh/ec2.pem
-      - name: open pem file
-        run: cat /home/runner/.ssh/ec2.pem
-      - name: Check SSH connection1
-        run: ssh -T staging
-      - name: Check SSH connection
-        run: ssh staging hostname
+      # - name: Check permission of pem
+      #   run: ls -l /home/runner/.ssh/ec2.pem
+      # - name: open pem file
+      #   run: cat /home/runner/.ssh/ec2.pem
+      # - name: Check SSH connection1
+      #   run: ssh -T staging
+      # - name: Check SSH connection
+      #   run: ssh staging hostname
       - name: Check if PM2 is installed
         run: |
           if which pm2 >/dev/null; then
@@ -54,9 +54,12 @@ jobs:
       - name: Start the server
         if: ${{ always() }}
         run: ssh staging 'pm2 start server.js'
+        # run: ssh staging 'pm2 start server.js'
 
       - name: git checkout to develop
-        run:  ssh staging 'git checkout develop'
+        run:  git checkout develop
+        # run:  ssh staging 'git checkout develop'
       
       - name: pull remote develop to server
-        run:  ssh staging 'git pull origin develop'
+        run:  git pull origin develop
+        # run:  ssh staging 'git pull origin develop'
