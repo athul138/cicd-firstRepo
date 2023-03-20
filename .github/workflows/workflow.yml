@@ -32,6 +32,9 @@ jobs:
           SSH_HOST: 'ec2-3-110-28-98.ap-south-1.compute.amazonaws.com'
           # SSH_HOST: '172-31-9-166'
       - uses: actions/checkout@v2
+      - name: connect to staging check
+       run: ssh -q -o BatchMode=yes staging 'echo connected'
+       
       - name: Check if PM2 is installed
         run: |
           if which pm2 >/dev/null; then
