@@ -28,7 +28,7 @@ jobs:
           SSH_KEY: '${{ secrets.STAGING_SSH_KEY }}'
           SSH_HOST: 'ec2-3-110-28-98.ap-south-1.compute.amazonaws.com'
       - uses: actions/checkout@v2
-       - name: Check SSH connection1
+      - name: Check SSH connection1
         run: ssh -T staging
       - name: Check SSH connection
         run: ssh staging hostname
