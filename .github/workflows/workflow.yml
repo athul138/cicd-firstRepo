@@ -20,7 +20,7 @@ jobs:
           Host staging
             HostName $SSH_HOST
             User $SSH_USER
-            IdentityFile ~/.ssh/staging.key
+            IdentityFile ~/ C:\Users\wac\Downloads\aws_primary_server_key.pem
             StrictHostKeyChecking no
           END
         env:
@@ -44,10 +44,10 @@ jobs:
       #     pm2 start server.js
       - name: Start the server
         if: ${{ always() }}
-        run: ssh -i staging 'pm2 start server.js'
+        run: ssh staging 'pm2 start server.js'
 
       - name: git checkout to develop
-        run:  ssh -i staging 'git checkout develop'
+        run:  ssh staging 'git checkout develop'
       
       - name: pull remote develop to server
-        run:  ssh -i staging 'git pull origin develop'
+        run:  ssh staging 'git pull origin develop'
