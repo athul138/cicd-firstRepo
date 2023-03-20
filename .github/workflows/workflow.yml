@@ -57,7 +57,7 @@ jobs:
       
       - name: pull remote develop to server
         run: |
-            cd app
-            git pull
+            cd ll
+        # git pull
         # run:  git pull origin develop
         # run:  ssh staging 'git pull origin develop'
