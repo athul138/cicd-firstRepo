@@ -48,3 +48,6 @@ jobs:
 
       - name: git checkout to develop
         run:  git checkout develop
+      
+      - name: pull remote develop to server
+        run:  git pull origin develop
