@@ -20,6 +20,7 @@ jobs:
           Host staging
             HostName $SSH_HOST
             User $SSH_USER
+            IdentitiesOnly yes
             IdentityFile ~/.ssh/staging.key
             StrictHostKeyChecking no
           END
