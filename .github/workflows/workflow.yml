@@ -20,7 +20,7 @@ jobs:
           Host staging
             HostName $SSH_HOST
             User $SSH_USER
-            IdentityFile ~/ C:\Users\wac\Downloads\aws_primary_server_key.pem
+            IdentityFile ~/ Downloads\aws_primary_server_key.pem
             StrictHostKeyChecking no
           END
         env:
