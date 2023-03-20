@@ -1,19 +1,63 @@
 name: CI
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - develop
+
 jobs:
-  # test:
-  #   ...
   deploy:
-    name: "Deploy to staging"
+    name: "Deploy to server"
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     # needs: test
-    env:
-      SSH_USER: $SSH_USER
-      SSH_HOST: $SSH_HOST
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     steps:
-      - name: ssh key name
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y ssh
+      - name: Configure SSH
         run: |
-          mkdir -p ~/ athul
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.STAGING_SSH_KEY }}" > ~/.ssh/ec2.pem
+          chmod 600 ~/.ssh/ec2.pem
+          ssh-keyscan ec2-3-110-28-98.ap-south-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/ec2.pem
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: 'ubuntu'
+          SSH_KEY: '${{ secrets.STAGING_SSH_KEY }}'
+          SSH_HOST: 'ec2-3-110-28-98.ap-south-1.compute.amazonaws.com'
+      - uses: actions/checkout@v2
+      # - name: Check permission of pem
+      #   run: ls -l /home/runner/.ssh/ec2.pem
+      # - name: open pem file
+      #   run: cat /home/runner/.ssh/ec2.pem
+      # - name: Check SSH connection1
+      #   run: ssh -T staging
+      # - name: Check SSH connection
+      #   run: ssh staging hostname
+      - name: git checkout to develop
+        run:  ssh staging 'git checkout develop'
+      
+      - name: pull remote develop to server
+        run:  ssh staging 'git pull origin develop'
+
+      - name: Check if PM2 is installed
+        run: |
+          if which pm2 >/dev/null; then
+            echo "PM2 is already installed"
+          else
+            npm install -g pm2
+          fi
+      - name: npm install for project
+        run: npm install
+      # - name: Start Application with PM2
+      #   run: |
+      #     pm2 start server.js
+      - name: Start the server
+        if: ${{ always() }}
+        run: ssh staging 'pm2 start server.js'
 
