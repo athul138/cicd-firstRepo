@@ -14,13 +14,13 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/staging.pem
-          chmod 600 ~/.ssh/staging.pem
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
           cat >>~/.ssh/config <<END
           Host staging
             HostName $SSH_HOST
             User $SSH_USER
-            IdentityFile ~/.ssh/staging.pem
+            IdentityFile ~/.ssh/staging.key
             StrictHostKeyChecking no
           END
         env:
@@ -44,10 +44,10 @@ jobs:
       #     pm2 start server.js
       - name: Start the server
         if: ${{ always() }}
-        run: ssh staging 'pm2 start server.js'
+        run: ssh -i staging 'pm2 start server.js'
 
       - name: git checkout to develop
-        run:  ssh staging 'git checkout develop'
+        run:  ssh -i staging 'git checkout develop'
       
       - name: pull remote develop to server
-        run:  ssh staging 'git pull origin develop'
+        run:  ssh -i staging 'git pull origin develop'
