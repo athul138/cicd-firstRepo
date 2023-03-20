@@ -53,7 +53,7 @@ jobs:
       #     pm2 start server.js
       - name: Start the server
         if: ${{ always() }}
-        run: ssh staging 'pm2 start server.js'
+        run: pm2 start server.js
         # run: ssh staging 'pm2 start server.js'
 
       - name: git checkout to develop
