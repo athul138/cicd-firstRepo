@@ -17,7 +17,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh/
           echo "${{ secrets.STAGING_SSH_KEY }}" > ~/.ssh/ec2.pem
-          chmod 600 ~/ home/runner/.ssh/ec2.pem
+          chmod 600 ~/.ssh/ec2.pem
           ssh-keyscan ec2-3-110-28-98.ap-south-1.compute.amazonaws.com >> ~/.ssh/known_hosts
           cat >>~/.ssh/config <<END
           Host staging
