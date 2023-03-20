@@ -11,16 +11,19 @@ jobs:
     if: github.event_name == 'push'
     # needs: test
     steps:
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y ssh
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.STAGING_SSH_KEY }}" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
+          echo "${{ secrets.STAGING_SSH_KEY }}" > ~/.ssh/ec2.pem
+          chmod 400 ~/.ssh/ec2.pem
+          ssh-keyscan ec2-3-110-28-98.ap-south-1.compute.amazonaws.com >> ~/.ssh/known_hosts
           cat >>~/.ssh/config <<END
           Host staging
             HostName $SSH_HOST
             User $SSH_USER
-            IdentityFile ~/.ssh/staging.key
+            IdentityFile ~/.ssh/ec2.pem
             StrictHostKeyChecking no
           END
         env:
