@@ -20,18 +20,18 @@ jobs:
           Host staging
             HostName $SSH_HOST
             User $SSH_USER
-            IdentitiesOnly yes
             IdentityFile ~/.ssh/staging.key
             StrictHostKeyChecking no
           END
-        # run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" ubuntu@ec2-3-110-28-98.ap-south-1.compute.amazonaws.com -p ${{ secrets.STAGING_PORT }} whoami
         env:
-          # SSH_USER: '${{ secrets.STAGING_SSH_USER }}'
           SSH_USER: 'ubuntu'
           SSH_KEY: '${{ secrets.STAGING_SSH_KEY }}'
           SSH_HOST: 'ec2-3-110-28-98.ap-south-1.compute.amazonaws.com'
-          # SSH_HOST: '172-31-9-166'
       - uses: actions/checkout@v2
+       - name: Check SSH connection1
+        run: ssh -T staging
+      - name: Check SSH connection
+        run: ssh staging hostname
       - name: Check if PM2 is installed
         run: |
           if which pm2 >/dev/null; then
@@ -41,8 +41,9 @@ jobs:
           fi
       - name: npm install for project
         run: npm install
-      - name: Start Application with PM2
-        run: ssh -q -o BatchMode=yes staging 'echo connected'
+      # - name: Start Application with PM2
+      #   run: |
+      #     pm2 start server.js
       - name: Start the server
         if: ${{ always() }}
         run: ssh staging 'pm2 start server.js'
