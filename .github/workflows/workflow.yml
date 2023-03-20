@@ -56,8 +56,5 @@ jobs:
         # run:  ssh staging 'git checkout develop'
       
       - name: pull remote develop to server
-        run: |
-            cd ll
-        # git pull
-        # run:  git pull origin develop
+        run:  git pull origin develop
         # run:  ssh staging 'git pull origin develop'
