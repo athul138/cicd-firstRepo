@@ -47,4 +47,4 @@ jobs:
         run: pm2 start server.js
 
       - name: git checkout to develop
-        run: cd app && git checkout develop
+        run:  git checkout develop
