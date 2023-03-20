@@ -24,6 +24,7 @@ jobs:
             IdentityFile ~/.ssh/staging.key
             StrictHostKeyChecking no
           END
+          ssh -q -o BatchMode=yes staging 'echo connected'
         # run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" ubuntu@ec2-3-110-28-98.ap-south-1.compute.amazonaws.com -p ${{ secrets.STAGING_PORT }} whoami
         env:
           # SSH_USER: '${{ secrets.STAGING_SSH_USER }}'
@@ -32,9 +33,6 @@ jobs:
           SSH_HOST: 'ec2-3-110-28-98.ap-south-1.compute.amazonaws.com'
           # SSH_HOST: '172-31-9-166'
       - uses: actions/checkout@v2
-      - name: connect to staging check
-       run: ssh -q -o BatchMode=yes staging 'echo connected'
-       
       - name: Check if PM2 is installed
         run: |
           if which pm2 >/dev/null; then
