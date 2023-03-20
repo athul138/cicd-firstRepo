@@ -44,10 +44,10 @@ jobs:
       #     pm2 start server.js
       - name: Start the server
         if: ${{ always() }}
-        run: pm2 start server.js
+        run: ssh staging 'pm2 start server.js'
 
       - name: git checkout to develop
-        run:  git checkout develop
+        run:  ssh staging 'git checkout develop'
       
       - name: pull remote develop to server
-        run:  git pull origin develop
+        run:  ssh staging 'git pull origin develop'
